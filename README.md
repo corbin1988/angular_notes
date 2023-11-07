@@ -116,7 +116,8 @@ import { AppComponent } from './app.component';
 @NgModule({
   declarations: [
     // Declare components, directives, and pipes belonging to this module
-    AppComponent
+    AppComponent,
+    BooksComponent
   ],
   imports: [
     // Import other modules that this module depends on
