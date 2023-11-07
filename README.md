@@ -482,3 +482,26 @@ The ngStyle directive is used to apply inline styles conditionally. You can styl
 ```
 
 In this example, the `ngStyle` directive sets the text color to blue for fiction books and green for other genres.
+
+## Pipes
+
+Pipes are simple functions to use in template expressions to accept an input value and return a transformed value. 
+
+Pipes are useful because you can use them throughout your application, while only declaring each pipe once.
+
+For example, you would use a pipe to show a date as April 15, 1988 rather than the raw string format.
+
+```
+<div>
+  <h2>Book List</h2>
+  <ul>
+    <li *ngFor="let book of books">
+      {{ book.title }} by {{ book.author }} (Released: {{ book.releaseDate | date:'longDate' }})
+    </li>
+  </ul>
+</div>
+```
+
+We're using the date pipe to format the `book.releaseDate` property.
+
+The date:'longDate' part of the pipe specifies the desired date format. Angular's date pipe provides various date format options, and 'longDate' is one of them, which displays the date in a long, human-readable format.
