@@ -400,3 +400,85 @@ In the parent component's template, you can bind the `(bookChange)` event to the
 With this setup, when the user edits the book title in the child component, the updated title will be automatically reflected in the parent component's `selectedBook` property. The `(bookChange)` event allows you to handle the changes in the parent component.
 
 Two-way binding simplifies the synchronization of data between parent and child components, making it a convenient feature for building interactive forms and real-time data sharing. It enhances the user experience by keeping data in sync without the need for extensive manual code.
+
+## Directives
+
+Directives are classes that add additional behavior to elements in your Angular applications. Directives are an essential part of Angular that allow you to manipulate the DOM, control rendering, and add behavior to your templates. Here are a few examples of common directives in the context of the "books" component:
+
+### ngFor Directive: Displaying a List of Books
+
+The `*ngFor` directive is used to iterate through an array and render a list of elements. In your "books" component template (`books.component.html`), you can use it to display a list of books from an array:
+
+```html
+<div>
+  <h2>Book List</h2>
+  <ul>
+    <li *ngFor="let book of books">{{ book.title }} by {{ book.author }}</li>
+  </ul>
+</div>
+```
+
+In this example, the `*ngFor` directive iterates through the books array and displays each book's title and author.
+
+### `ngIf` Directive: Conditionally Displaying Elements
+
+The `*ngIf` directive allows you to conditionally render elements based on a condition. For instance, you can use it to display a message only if there are no books to show:
+
+```html
+<div>
+  <h2>Book List</h2>
+  <ul *ngIf="books.length > 0">
+    <li *ngFor="let book of books">{{ book.title }} by {{ book.author }}</li>
+  </ul>
+  <p *ngIf="books.length === 0">No books to display.</p>
+</div>
+```
+
+In this example, the `*ngIf` directive checks if the books array is empty and renders either the list of books or a message accordingly.
+
+### ngModel Directive: Two-Way Data Binding
+
+The ngModel directive is used for two-way data binding, especially with form elements. In the context of editing a book's title, you can use ngModel to bind an input field to a book's title property:
+
+```html
+<div>
+  <h2>Edit Book Title</h2>
+  <input type="text [(ngModel)]="selectedBook.title">
+</div>
+```
+
+In this example, changes made in the input field will update the `selectedBook.title` property in real-time due to two-way binding.
+
+### ngClass Directive: Applying CSS Classes Conditionally
+
+The ngClass directive allows you to conditionally apply CSS classes to elements. For example, you can highlight books based on their availability:
+
+```html
+<div>
+  <h2>Book List</h2>
+  <ul>
+    <li *ngFor="let book of books" [ngClass]="{'available': book.available, 'unavailable': !book.available}">
+      {{ book.title }} by {{ book.author }}
+    </li>
+  </ul>
+</div>
+```
+
+In this example, the `ngClass` directive applies the "available" or "unavailable" CSS class based on the `book.available` property.
+
+### ngStyle Directive: Applying Inline Styles Conditionally
+
+The ngStyle directive is used to apply inline styles conditionally. You can style books differently based on their genre, for example:
+
+```html
+<div>
+  <h2>Book List</h2>
+  <ul>
+    <li *ngFor="let book of books" [ngStyle]="{ 'color': book.genre === 'Fiction' ? 'blue' : 'green' }">
+      {{ book.title }} by {{ book.author }}
+    </li>
+  </ul>
+</div>
+```
+
+In this example, the `ngStyle` directive sets the text color to blue for fiction books and green for other genres.
