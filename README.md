@@ -505,3 +505,61 @@ For example, you would use a pipe to show a date as April 15, 1988 rather than t
 We're using the date pipe to format the `book.releaseDate` property.
 
 The date:'longDate' part of the pipe specifies the desired date format. Angular's date pipe provides various date format options, and 'longDate' is one of them, which displays the date in a long, human-readable format.
+
+### Parent To Child Data
+
+In Angular, you can pass data from a parent component to a child component by using input properties. Let's take the example of the "books" component (parent) passing data to a "book" component (child) by passing a book object. Here's how you can do it:
+
+### Parent Component ("books.component.ts"):
+
+In your parent component, you can define a book object and pass it to the child component using an input property.
+
+```TS
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-books',
+  templateUrl: './books.component.html',
+})
+export class BooksComponent {
+  bookData: any = { title: 'Book 1', author: 'Author 1' };
+}
+```
+
+### Parent Component Template ("books.component.html"):
+
+In the parent component's template, you can use the child component and bind the bookData to an input property in the child component. Let's assume the child component selector is app-book.
+
+```html
+<div>
+  <h2>Books</h2>
+  <app-book [book]="bookData"></app-book>
+</div>
+```
+
+### Child Component ("book.component.ts"):
+
+In your child component, you need to define an input property to receive the book data passed from the parent component.
+
+``` TS
+import { Component, Input } from '@angular/core';
+@Component({
+  selector: 'app-book',
+  templateUrl: './book.component.html',
+})
+export class BookComponent {
+  @Input() book: any;
+}
+```
+
+### Child Component Template ("book.component.html"):
+
+In the child component's template, you can access and display the book data received from the parent component.
+
+```
+<div>
+  <h3>Book Details</h3>
+  <p>Title: {{ book.title }}</p>
+  <p>Author: {{ book.author }}</p>
+</div>
+```
