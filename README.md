@@ -251,3 +251,29 @@ Now, let's create the template for the "books" component in the HTML file (`book
   </ul>
 </div>
 ```
+## Property Binding
+
+Property binding in Angular allows you to set or update an HTML element's property (or attribute) based on a value from your component. In the context of the "books" component with book objects, I'll explain how property binding works.
+
+Let's say you want to bind an HTML element's property, such as the `title` attribute of an anchor (`<a>`) element, to a book's title. Here's how you can achieve property binding:
+
+First, in your "books" component template (`books.component.html`), let's assume you have an anchor element that you want to set the `title` attribute for a book link. You can use property binding to set the `title` attribute to the book's title. Here's an example:
+
+```
+<!-- books.component.html -->
+
+<div>
+  <h2>Book List</h2>
+  <ul>
+    <li *ngFor="let book of books">
+      <a [href]="'/book-details/' + book.title">{{ book.title }} by {{ book.author }}</a>
+    </li>
+  </ul>
+</div>
+```
+We use `[href]` for property binding to set the `href` attribute of the anchor element.
+
+`'/'` is a string representing the base URL for your application. You may need to adjust this to match your application's routing configuration.
+
+`'/book-details/' + book.title` is an expression that dynamically constructs the URL for the book details page. We append the book's title to the base URL to create a unique URL for each book.
+
