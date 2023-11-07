@@ -217,3 +217,37 @@ export class AppModule { }
 
 Now, when you run your Angular application, the "books" component will be rendered as part of the AppComponent. You will see the content and functionality of the "books" component within the application.
 
+## Template Interpolation
+
+First, assume you have a "books" component with a list of books defined in its TypeScript file (`books.component.ts`). Here's an example of what the component could look like:
+
+```TS
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-books',
+  templateUrl: './books.component.html',
+})
+export class BooksComponent {
+  books: Books[] = [
+    { title: 'Book 1', author: 'Author 1' },
+    { title: 'Book 2', author: 'Author 2' },
+    { title: 'Book 3', author: 'Author 3' },
+    { title: 'Book 4', author: 'Author 4' },
+    { title: 'Book 5', author: 'Author 5' },
+  ];
+}
+```
+
+Now, let's create the template for the "books" component in the HTML file (`books.component.html`) and use template interpolation to display the list of books:
+
+```
+<!-- books.component.html -->
+
+<div>
+  <h2>Book List</h2>
+  <ul>
+    <li *ngFor="let book of books">{{ book }}</li>
+  </ul>
+</div>
+```
