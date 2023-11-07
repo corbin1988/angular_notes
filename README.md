@@ -636,3 +636,94 @@ In the parent component's template, you bind to the child component's custom eve
 ```
 
 In this example, when the child component emits the customEvent, it triggers the handleCustomEvent method in the parent component. The data sent from the child component is captured and displayed in the parent component's template.
+
+### Lifecycle Hooks
+
+A component instance has a lifecycle that starts when Angula instantiates the component class and renders the componenview along with its child views.
+
+The lifecycle continues with change detection, as Angular che to see when data-bound properties change, and updates bot the view and the component instance as needed.
+
+The lifecycle ends when Angular destroys the component instance and removes its rendered template from the DOM.
+
+### ngOnChanges 
+
+This hook is called when data-bound input properties change. It receives a SimpleChanges object that holds information about the changes.
+
+```TS
+ngOnChanges(changes: SimpleChanges) {
+  if (changes.someInput) {
+    console.log('Input property "someInput" changed.');
+  }
+}
+```
+
+### ngOnInit
+
+This hook is called once, after the component is initialized. It's commonly used for tasks like initializing data.
+
+```TS
+ngOnInit() {
+  console.log('Component initialized.');
+}
+```
+
+### ngDoCheck 
+
+This hook is called during every change detection cycle, allowing you to perform custom change detection logic.
+
+```TS
+ngDoCheck() {
+  console.log('Change detection cycle triggered.');
+}
+```
+
+### ngAfterContentInit 
+
+This hook is called after the component's content is initialized. It's often used with content projection in Angular.
+
+```TS
+ngAfterContentInit() {
+  console.log('Content initialization completed.');
+}
+```
+
+### ngAfterContentChecked 
+
+This hook is called after every check of the component's content. It can be used to perform additional logic after content projection changes.
+
+```TS
+ngAfterContentChecked() {
+  console.log('Content checked.');
+}
+```
+### ngAfterViewInit 
+
+This hook is called after the component's view and child views are initialized.
+
+```TS
+ngAfterViewInit() {
+  console.log('View and child views initialized.');
+}
+```
+### ngAfterViewChecked
+
+This hook is called after every check of the component's view and child views. It's used to perform additional logic after view changes.
+
+```TS
+ngAfterViewChecked() {
+  console.log('View and child views checked.');
+}
+```
+### ngOnDestroy
+
+This hook is called just before the component is destroyed. It's useful for cleaning up resources, like unsubscribing from observables.
+
+```TS
+ngOnDestroy() {
+  console.log('Component destroyed.');
+}
+```
+
+The component's lifecycle starts with the instantiation of the component class, rendering of the component view, and child views. Change detection continuously checks for data-bound property changes, and updates both the view and the component instance as needed. The lifecycle ends when Angular destroys the component instance and removes its rendered template from the DOM. By implementing these hooks, you can customize the behavior of your components at different stages of their lifecycle.
+
+
