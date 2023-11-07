@@ -1,6 +1,6 @@
 # Angular Context Switching Notes
 
-## Starting A Project And Running It
+## Using Angular CLI
 
 Angular has its own cli tool you need to install.
 
@@ -24,6 +24,11 @@ Then
 ng serve
 ```
 
+### Generate A Component
+
+```
+ng generate component
+```
 
 ## Project Structure Explained
 
@@ -94,3 +99,62 @@ Here's a brief explanation of key directories and files in an Angular project:
 - **tslint.json**: TSLint configuration (optional, as TSLint is deprecated; consider using ESLint with TypeScript).
 - **README.md**: Project documentation and instructions for other developers.
 
+## How the App Module Works:
+
+The root module is often named AppModule and serves as the entry point of your Angular application.
+
+```TS
+// Import required Angular modules and libraries
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+// Import the root component
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    // Declare components, directives, and pipes belonging to this module
+    AppComponent
+  ],
+  imports: [
+    // Import other modules that this module depends on
+    BrowserModule
+  ],
+  providers: [
+    // Provide services at the module level
+  ],
+  bootstrap: [
+    // Define the root component of the application
+    AppComponent
+  ]
+})
+export class AppModule { }
+```
+
+### Imports:
+
+We start by importing the necessary modules and libraries. In this example, we import the `BrowserModule` from `@angular/platform-browser` and the `NgModule` decorator from `@angular/core`. You'll also import any other Angular modules, components, services, or libraries that your application needs.
+
+### NgModule Decorator:
+
+The `@NgModule` decorator is used to define and configure the Angular module. This decorator takes an object with several configuration options.
+
+### declarations:
+
+The `declarations` array is used to list the components, directives, and pipes that belong to this module. In our example, we declare the `AppComponent`. If you have other components, you would include them here.
+
+### imports:
+
+The `imports` array lists other modules that this module depends on. In this case, we import the `BrowserModule`, which is a fundamental module required for running Angular applications in a browser.
+
+### providers:
+
+The `providers` array is used to specify services that should be available at the module level. You can provide services here that you want to be accessible throughout the module. For example, you would add services that provide data or functionality used by components.
+
+### bootstrap:
+
+The `bootstrap` array defines the root component of the application. The root component is the initial component that gets loaded when the application starts. In this example, we set `AppComponent` as the root component.
+
+### Exporting the Module:
+
+Finally, we export the `AppModule` class so that it can be used in other parts of your application.
