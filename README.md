@@ -26,6 +26,8 @@ ng serve
 
 ### Generate A Component
 
+Components are automatically registered in `app.module.ts`
+
 ```
 ng generate component books
 ```
