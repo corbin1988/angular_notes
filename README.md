@@ -277,3 +277,54 @@ We use `[href]` for property binding to set the `href` attribute of the anchor e
 
 `'/book-details/' + book.title` is an expression that dynamically constructs the URL for the book details page. We append the book's title to the base URL to create a unique URL for each book.
 
+## Event Binding
+
+Event binding lets you listen for and respond to user actions such as keystrokes, mouse movements, clicks, and touches.
+
+### Click Event: Display Book Details
+
+Let's say you want to display book details when a user clicks on a book title. You can use the (click) event binding to achieve this. In your "books" component template (`books.component.html`), you can do something like this:
+
+```html
+<div>
+  <h2>Book List</h2>
+  <ul>
+    <li *ngFor="let book of books">
+      <a [href]="'/book-details/' + book.title" (click)="showBookDetails(book)">{{ book.title }} by {{ book.author }}</a>
+    </li>
+  </ul>
+</div>
+```
+
+In the above example, we're binding the (click) event to a showBookDetails(book) method in your component. When a user clicks on a book title, the showBookDetails method can display book details or navigate to a book details page.
+
+### Mouseover Event: Tooltip Display
+
+Suppose you want to display a tooltip when a user hovers the mouse over a book title. You can use the (mouseover) event binding for this purpose. Here's an example:
+
+```HTML
+<div>
+  <h2>Book List</h2>
+  <ul>
+    <li *ngFor="let book of books">
+      <a [href]="'/book-details/' + book.title" (mouseover)="displayTooltip(book.title)">{{ book.title }} by {{ book.author }}</a>
+    </li>
+  </ul>
+</div>
+```
+
+In this example, we're binding the (mouseover) event to a displayTooltip(book.title) method. When a user hovers over a book title, the displayTooltip method can show a tooltip with the book's title.
+
+### Keypress Event: Search Books
+
+If you want to allow users to search for books by typing in a search box, you can use the (keypress) event binding to capture keypress events. Here's an example:
+
+```HTML
+<div>
+  <h2>Search for Books</h2>
+  <input type="text" (keypress)="searchBooks($event)" placeholder="Type to search...">
+</div>
+```
+
+In this example, we're binding the (keypress) event to a searchBooks($event) method. The searchBooks method can handle user input and filter the list of books based on the search query.
+
