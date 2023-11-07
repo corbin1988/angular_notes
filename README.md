@@ -27,7 +27,7 @@ ng serve
 ### Generate A Component
 
 ```
-ng generate component
+ng generate component books
 ```
 
 ## Project Structure Explained
