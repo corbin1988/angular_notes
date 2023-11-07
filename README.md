@@ -563,3 +563,76 @@ In the child component's template, you can access and display the book data rece
   <p>Author: {{ book.author }}</p>
 </div>
 ```
+
+## Passing Data From Child To Parent
+
+In Angular, passing data from a child component to a parent component can be accomplished through a child-to-parent event with a custom listener. This process is often used when you want a child component to notify its parent component about specific actions or events, and the parent component needs to respond to those events.
+
+Here's an explanation of how this communication works:
+
+### Child Component Sending Data to Parent Component with a Custom Listener:
+
+**Child Component (Emitter):** In the child component, you first define an event or action that needs to be communicated to the parent component. You can create a custom event using Angular's `EventEmitter`.
+
+```TS
+import { Component, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  templateUrl: './child.component.html',
+})
+export class ChildComponent {
+  @Output() customEvent = new EventEmitter<any>();
+
+  sendDataToParent() {
+    const data = 'Some data from the child component';
+    this.customEvent.emit(data);
+  }
+}
+```
+
+In this example, the `ChildComponent` defines an `@Output` property named `customEvent` of type `EventEmitter`. The `sendDataToParent` method emits the event and sends data to the parent component.
+
+### Child Component Triggering the Event: 
+
+When a specific action occurs in the child component (e.g., a button click), you call the method that emits the custom event. This triggers the event and sends the data to the parent component.
+
+```
+<button (click)="sendDataToParent()">Send Data to Parent</button>
+```
+
+When the user clicks the button, the `sendDataToParent` method is called, and the custom event is emitted.
+
+###Parent Component (Listener): 
+
+In the parent component, you need to listen for the custom event emitted by the child component. You can do this by binding to the event in the parent component's template and calling a method to handle the data.
+
+```TS
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-parent',
+  templateUrl: './parent.component.html',
+})
+export class ParentComponent {
+  receivedData: string;
+
+  handleCustomEvent(data: string) {
+    this.receivedData = data;
+  }
+}
+```
+
+
+In the parent component, you define a property (receivedData) to store the data received from the child component and a method (handleCustomEvent) to handle the data.
+
+### Binding to the Child Component's Event: 
+
+In the parent component's template, you bind to the child component's custom event and call the handleCustomEvent method to process the received data.
+
+```
+<app-child (customEvent)="handleCustomEvent($event)"></app-child>
+<p>Data received from child component: {{ receivedData }}</p>
+```
+
+In this example, when the child component emits the customEvent, it triggers the handleCustomEvent method in the parent component. The data sent from the child component is captured and displayed in the parent component's template.
