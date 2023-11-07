@@ -161,3 +161,59 @@ The `bootstrap` array defines the root component of the application. The root co
 ### Exporting the Module:
 
 Finally, we export the `AppModule` class so that it can be used in other parts of your application.
+
+## How To Make A Component
+
+### Step 1: Import the Component
+
+In your Angular application, open the TypeScript file where you want to use the "books" component. Typically, you would use it in another component or within your application's root module. Import the "books" component at the top of the file. For example, if you have a component called `app.component.ts`, you can import it like this:
+
+```
+import { Component } from '@angular/core';
+import { BooksComponent } from './path-to-books-component/books.component'; // Update the path as needed
+```
+
+### Step 2: Use the Component in the Template
+
+In the same file (`app.component.ts` in this example), you can use the "books" component in your template by including its selector. If you've defined a selector for the "books" component in its metadata, you can use it like this:
+
+```TS
+@Component({
+  selector: 'app-root',
+  template: `
+    <h1>Welcome to My Bookstore</h1>
+    <app-books></app-books> <!-- Use the selector here -->
+  `
+})
+export class AppComponent {
+  // Component logic here
+}
+```
+
+In this example, we're using the "app-books" selector within the template of the AppComponent. The "app-books" selector represents the "books" component, and it will render the "books" component's template and functionality in the AppComponent's template.
+
+### Step 3: Update the Module Declarations
+
+If you haven't already added the "books" component to the declarations array of your module (e.g., the root module), you need to do so. In your module file (e.g., `app.module.ts`), ensure that the "books" component is declared like this:
+
+```TS
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { BooksComponent } from './path-to-books-component/books.component'; // Update the path as needed
+
+@NgModule({
+  declarations: [
+    BooksComponent, // Include the BooksComponent in the declarations array
+    // ... other components, directives, and pipes
+  ],
+  imports: [BrowserModule],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+### Step 4: Render the Component
+
+Now, when you run your Angular application, the "books" component will be rendered as part of the AppComponent. You will see the content and functionality of the "books" component within the application.
+
