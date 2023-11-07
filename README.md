@@ -328,3 +328,75 @@ If you want to allow users to search for books by typing in a search box, you ca
 
 In this example, we're binding the (keypress) event to a searchBooks($event) method. The searchBooks method can handle user input and filter the list of books based on the search query.
 
+## Two Way Binding
+
+Two-way binding gives components in your application a way to share data. Use two-
+way binding to listen for events and update values simultaneously between parent and
+child components.
+
+Suppose you want to allow users to edit a book's title in a child component, and when the user changes the title, it should also update the parent component. You can use two-way binding with [(ngModel)] for this purpose. Here's how it works:
+
+### Setting up Two-way Binding in Child Component:
+
+In your child component's template (book-edit.component.html for this example), you can have an input field that binds to the book's title using [(ngModel)]:
+
+```html
+<input type="text" [(ngModel)]="book.title">
+```
+
+In your child component's TypeScript file (`book-edit.component.ts`), you define an `@Input` property to receive the book object from the parent component and `@Output` to emit the updated book when the user edits the title:
+
+```rsjs
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-book-edit',
+  templateUrl: './book-edit.component.html',
+})
+export class BookEditComponent {
+  @Input() book: any;
+  @Output() bookChange = new EventEmitter<any>();
+}
+```
+
+### Using the Child Component in the Parent Component:
+
+In your parent component's template (`books.component.html`), you can use the child component and pass the book object to it:
+
+```rxjs
+<div>
+  <h2>Edit Book Title</h2>
+  <app-book-edit [(book)]="selectedBook"></app-book-edit>
+</div>
+```
+
+n this example, selectedBook is a property in your parent component that holds the book object you want to edit.
+
+### Handling Changes in the Parent Component:
+
+When the user edits the title in the child component, it automatically updates the `selectedBook` property in the parent component because of the two-way binding. You can listen to changes in the parent component using the `(bookChange)` event emitted by the child component:
+
+```rxjs
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-books',
+  templateUrl: './books.component.html',
+})
+export class BooksComponent {
+  selectedBook: any = { title: 'Book 1', author: 'Author 1' };
+
+  onBookChange(book: any) {
+    console.log('Book changed:', book);
+  }
+}
+```
+In the parent component's template, you can bind the `(bookChange)` event to the `onBookChange` method:
+
+```rxjs
+<app-book-edit [(book)]="selectedBook" (bookChange)="onBookChange($event)"></app-book-edit>
+```
+
+With this setup, when the user edits the book title in the child component, the updated title will be automatically reflected in the parent component's `selectedBook` property. The `(bookChange)` event allows you to handle the changes in the parent component.
+
+Two-way binding simplifies the synchronization of data between parent and child components, making it a convenient feature for building interactive forms and real-time data sharing. It enhances the user experience by keeping data in sync without the need for extensive manual code.
