@@ -815,3 +815,81 @@ In your component's template (`books.component.html`), you can display the list 
 
 With this setup, the `BookService` provides a centralized way to manage and access data (in this case, a list of books) across components. The service can be reused in multiple components, promoting data consistency and maintainability in your Angular application.
 
+## Dependency Injection
+
+DI is wired into the Angular framework and used everywhere to provide new
+components with the services or other
+things they need.
+
+Components consume services; that is, you can inject a service into a component, giving the component access to that service class.
+
+### How Dependency Injection Works in Angular:
+
+#### Service Registration 
+
+In Angular, you define services by creating classes and decorating them with @Injectable metadata. These services are registered in the application's dependency injection framework.
+
+#### Requesting Dependencies 
+
+Components, services, or other classes can request dependencies (services) by specifying them in their constructor. Angular will provide the required dependencies when an instance of the class is created.
+
+#### Dependency Resolution
+
+When an instance of a component or service is created, Angular's dependency injection system resolves the required dependencies and injects them into the constructor parameters.
+
+####Example: Using Dependency Injection in Angular:
+
+Let's say you have a service called BookService that provides a list of books. You want to use this service in a component called BooksComponent to display the list of books.
+
+1. Create the `BookService` Service:
+
+```TS
+// book.service.ts
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class BookService {
+  private books: any[] = [
+    { title: 'Book 1', author: 'Author 1' },
+    { title: 'Book 2', author: 'Author 2' },
+    // Add more books as needed
+  ];
+
+  getBooks() {
+    return this.books;
+  }
+}
+```
+
+2. Use the Service in the `BooksComponent` Component:
+
+```TS
+// books.component.ts
+import { Component } from '@angular/core';
+import { BookService } from './book.service'; // Import the BookService
+
+@Component({
+  selector: 'app-books',
+  templateUrl: './books.component.html',
+})
+export class BooksComponent {
+  books: any[] = [];
+
+  constructor(private bookService: BookService) {
+    // Use the BookService to get the list of books
+    this.books = this.bookService.getBooks();
+  }
+}
+```
+
+In this example:
+
+- The `BookService` is registered with Angular's dependency injection framework using the `@Injectabl`e decorator. It's a singleton service and is provided at the root level (providedIn: 'root').
+
+- In the BooksComponent, we inject the BookService as a dependency in the constructor. Angular's dependency injection framework automatically provides an instance of the BookService to the component.
+
+- The component uses the injected `BookService` to call the getBooks method and populate the books property, which is then used in the component's template.
+
+This demonstrates how dependency injection helps you manage and share dependencies (in this case, the BookService) throughout your Angular application. It promotes reusability and makes it easy to change or update dependencies without modifying a large number of components.
