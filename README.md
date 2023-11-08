@@ -1186,3 +1186,79 @@ import { BookDetailComponent } from './book-detail/book-detail.component';
 })
 export class AppModule {}
 ```
+
+## Route Guards
+
+Route guards are used to protect routes in an Angular application, ensuring that only authorized users can access certain routes. In your case, you can create a route guard to protect the route for viewing book details. 
+
+### Step 1: Create an Auth Guard
+
+Generate a route guard using the Angular CLI:
+
+```
+ng generate guard auth
+```
+This command will generate an `auth.guard.ts` file, which you can use to implement your route guard.
+
+### Step 2: Implement the Route Guard
+
+In the `auth.guard.ts` file, implement your route guard logic. For this example, let's create a simple `canActivate` guard that allows access to the book detail route only if the user is logged in. You can modify the logic according to your authentication requirements.
+
+```TS
+// auth.guard.ts
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuard implements CanActivate {
+  constructor(private router: Router) {}
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean | UrlTree {
+    // Implement your authentication logic here.
+    // For this example, let's assume the user is logged in.
+    const isLoggedIn = true;
+
+    if (isLoggedIn) {
+      return true; // Allow access to the route
+    } else {
+      // Redirect to the login page or any other route
+      return this.router.parseUrl('/login');
+    }
+  }
+}
+```
+
+### Step 3: Update the Route Configuration
+
+In your route configuration (`app-routing.module.ts`), apply the route guard to the book detail route:
+
+```
+// app-routing.module.ts
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { BooksComponent } from './books/books.component';
+import { BookDetailComponent } from './book-detail/book-detail.component';
+import { AuthGuard } from './auth.guard'; // Import the AuthGuard
+
+const routes: Routes = [
+  { path: '', redirectTo: '/books', pathMatch: 'full' },
+  { path: 'books', component: BooksComponent },
+  {
+    path: 'book/:id',
+    component: BookDetailComponent,
+    canActivate: [AuthGuard], // Apply the route guard
+  },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
+```
+
