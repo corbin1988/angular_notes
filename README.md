@@ -1082,3 +1082,107 @@ In Angular, you have several options for managing state, depending on the comple
 3. **RxJS Observables:** RxJS is a powerful library for handling asynchronous data streams. It's commonly used for managing state, especially when dealing with real-time data and complex interactions.
 4. **NgRx:** NgRx is a popular library that implements the Redux pattern for state management in Angular. It's especially useful for larger applications where state management can become complex.
 
+## Routing
+
+### Step 1. Generate Routes
+
+In the `app-routing.module.ts` file, configure the routes for your application. Create a route to display a single book:
+
+```TS
+// app-routing.module.ts
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { BooksComponent } from './books/books.component'; // Create this component
+import { BookDetailComponent } from './book-detail/book-detail.component'; // Create this component
+
+const routes: Routes = [
+  { path: '', redirectTo: '/books', pathMatch: 'full' },
+  { path: 'books', component: BooksComponent },
+  { path: 'book/:id', component: BookDetailComponent },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
+```
+
+### Step 2: Create Link
+
+In the `books.component.html` file, display the list of books and provide a link to view the details of each book:
+
+```TS
+<!-- books.component.html -->
+<h2>Books</h2>
+<ul>
+  <li *ngFor="let book of books">
+    {{ book.title }} by {{ book.author }}
+    <a [routerLink]="['/book', book.id]">View Details</a>
+  </li>
+</ul>
+```
+
+### Step 3: Display Single Page Component
+
+In the `book-detail.component.ts` file, retrieve and display the details of a single book using the BookService:
+
+```TS
+// book-detail.component.ts
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { BookService } from '../book.service';
+
+@Component({
+  selector: 'app-book-detail',
+  templateUrl: './book-detail.component.html',
+  styleUrls: ['./book-detail.component.css'],
+})
+export class BookDetailComponent implements OnInit {
+  book: any;
+
+  constructor(private bookService: BookService, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.book = this.bookService.getBook(id);
+  }
+}
+```
+
+Step 4: Create Single Page Template:
+
+In the `book-detail.component.html` file, display the details of the selected book:
+
+```html
+<!-- book-detail.component.html -->
+<h2>Book Details</h2>
+<div *ngIf="book">
+  <h3>{{ book.title }}</h3>
+  <p>Author: {{ book.author }}</p>
+  <p>Description: {{ book.description }}</p>
+</div>
+```
+
+Step 5: Update App Module
+
+Make sure to add the AppRoutingModule to your AppModule in the `app.module.ts` file:
+
+```TS
+// app.module.ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppRoutingModule } from './app-routing.module'; // Import the routing module
+
+import { AppComponent } from './app.component';
+import { BooksComponent } from './books/books.component';
+import { BookDetailComponent } from './book-detail/book-detail.component';
+
+@NgModule({
+  declarations: [AppComponent, BooksComponent, BookDetailComponent],
+  imports: [BrowserModule, AppRoutingModule], // Add the AppRoutingModule to imports
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
