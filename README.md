@@ -1150,7 +1150,7 @@ export class BookDetailComponent implements OnInit {
 }
 ```
 
-Step 4: Create Single Page Template:
+### Step 4: Create Single Page Template:
 
 In the `book-detail.component.html` file, display the details of the selected book:
 
@@ -1164,7 +1164,7 @@ In the `book-detail.component.html` file, display the details of the selected bo
 </div>
 ```
 
-Step 5: Update App Module
+### Step 5: Update App Module
 
 Make sure to add the AppRoutingModule to your AppModule in the `app.module.ts` file:
 
