@@ -4,104 +4,108 @@
 
 # Table of Contents
 
-1. [Using Angular CLI](#using-angular-cli)
-   1. [Creating A Project](#creating-a-project)
-   2. [Starting A Project](#starting-a-project)
-   3. [Generate A Component](#generate-a-component)
+- Using Angular CLI
+   - Creating A Project
+   - Starting A Project
+   - Generate A Component
 
-2. [Project Structure Explained](#project-structure-explained)
-3. [How the App Module Works](#how-the-app-module-works)
-   1. [Imports](#imports)
-   2. [NgModule Decorator](#ngmodule-decorator)
-   3. [declarations](#declarations)
-   4. [imports](#imports)
-   5. [providers](#providers)
-   6. [bootstrap](#bootstrap)
-   7. [Exporting the Module](#exporting-the-module)
+- Project Structure Explained
 
-4. [How To Make A Component](#how-to-make-a-component)
-   1. [Step 1: Import the Component](#step-1-import-the-component)
-   2. [Step 2: Use the Component in the Template](#step-2-use-the-component-in-the-template)
-   3. [Step 3: Update the Module Declarations](#step-3-update-the-module-declarations)
-   4. [Step 4: Render the Component](#step-4-render-the-component)
+- How the App Module Works
+   - Imports
+   - NgModule Decorator
+   - declarations
+   - imports
+   - providers
+   - bootstrap
+   - Exporting the Module
 
-5. [Template Interpolation](#template-interpolation)
-6. [Property Binding](#property-binding)
-7. [Event Binding](#event-binding)
-   1. [Click Event: Display Book Details](#click-event-display-book-details)
-   2. [Mouseover Event: Tooltip Display](#mouseover-event-tooltip-display)
-   3. [Keypress Event: Search Books](#keypress-event-search-books)
+- How To Make A Component
+   - Step 1: Import the Component
+   - Step 2: Use the Component in the Template
+   - Step 3: Update the Module Declarations
+   - Step 4: Render the Component
 
-8. [Two Way Binding](#two-way-binding)
-   1. [Setting up Two-way Binding in Child Component](#setting-up-two-way-binding-in-child-component)
-   2. [Using the Child Component in the Parent Component](#using-the-child-component-in-the-parent-component)
-   3. [Handling Changes in the Parent Component](#handling-changes-in-the-parent-component)
+- Template Interpolation
 
-9. [Directives](#directives)
-   1. [ngFor Directive: Displaying a List of Books](#ngfor-directive-displaying-a-list-of-books)
-   2. [`ngIf` Directive: Conditionally Displaying Elements](#ngif-directive-conditionally-displaying-elements)
-   3. [ngModel Directive: Two-Way Data Binding](#ngmodel-directive-two-way-data-binding)
-   4. [ngClass Directive: Applying CSS Classes Conditionally](#ngclass-directive-applying-css-classes-conditionally)
-   5. [ngStyle Directive: Applying Inline Styles Conditionally](#ngstyle-directive-applying-inline-styles-conditionally)
+- Property Binding
 
-10. [Pipes](#pipes)
-11. [Parent To Child Data](#parent-to-child-data)
-   1. [Parent Component ("books.component.ts")](#parent-component-bookscomponentts)
-   2. [Parent Component Template ("books.component.html")](#parent-component-template-bookscomponenthtml)
-   3. [Child Component ("book.component.ts")](#child-component-bookcomponentts)
-   4. [Child Component Template ("book.component.html")](#child-component-template-bookcomponenthtml)
+- Event Binding
+   - Click Event: Display Book Details
+   - Mouseover Event: Tooltip Display
+   - Keypress Event: Search Books
 
-12. [Passing Data From Child To Parent](#passing-data-from-child-to-parent)
-   1. [Child Component Sending Data to Parent Component with a Custom Listener](#child-component-sending-data-to-parent-component-with-a-custom-listener)
-   2. [Child Component Triggering the Event](#child-component-triggering-the-event)
-   3. [Parent Component (Listener)](#parent-component-listener)
-   4. [Binding to the Child Component's Event](#binding-to-the-child-components-event)
+- Two Way Binding
+   - Setting up Two-way Binding in Child Component
+   - Using the Child Component in the Parent Component
+   - Handling Changes in the Parent Component
 
-13. [Lifecycle Hooks](#lifecycle-hooks)
-   1. [ngOnChanges](#ngonchanges)
-   2. [ngOnInit](#ngoninit)
-   3. [ngDoCheck](#ngodocheck)
-   4. [ngAfterContentInit](#ngaftercontentinit)
-   5. [ngAfterContentChecked](#ngaftercontentchecked)
-   6. [ngAfterViewInit](#ngafterviewinit)
-   7. [ngAfterViewChecked](#ngafterviewchecked)
-   8. [ngOnDestroy](#ngondestroy)
+- Directives
+   - ngFor Directive: Displaying a List of Books
+   - `ngIf` Directive: Conditionally Displaying Elements
+   - ngModel Directive: Two-Way Data Binding
+   - ngClass Directive: Applying CSS Classes Conditionally
+   - ngStyle Directive: Applying Inline Styles Conditionally
 
-14. [Services](#services)
-   1. [Create the Service Class](#create-the-service-class)
-   2. [Define the Service Class (book.service.ts)](#define-the-service-class-bookservicets)
-   3. [Using the Book Service in a Component](#using-the-book-service-in-a-component)
-   4. [Inject the Service (`books.component.ts`)](#inject-the-service-bookscomponentts)
+- Pipes
 
-15. [Dependency Injection](#dependency-injection)
-   1. [How Dependency Injection Works in Angular](#how-dependency-injection-works-in-angular)
-      1. [Service Registration](#service-registration)
-      2. [Requesting Dependencies](#requesting-dependencies)
-      3. [Dependency Resolution](#dependency-resolution)
-   2. [Example: Using Dependency Injection in Angular](#example-using-dependency-injection-in-angular)
+- Parent To Child Data
+   - Parent Component ("books.component.ts")
+   - Parent Component Template ("books.component.html")
+   - Child Component ("book.component.ts")
+   - Child Component Template ("book.component.html")
 
-16. [Custom Modules](#custom-modules)
-   1. [Generate a Custom Module](#generate-a-custom-module)
-   2. [Use the Custom Module in Your Application](#use-the-custom-module-in-your-application)
+- Passing Data From Child To Parent
+   - Child Component Sending Data to Parent Component with a Custom Listener
+   - Child Component Triggering the Event
+   - Parent Component (Listener)
+   - Binding to the Child Component's Event
 
-17. [State Management With Services](#state-management-with-services)
-   1. [Step 1: Create a Shopping Cart Service](#step-1-create-a-shopping-cart-service)
-   2. [Step 2: Use the Shopping Cart Service in Your Components](#step-2-use-the-shopping-cart-service-in-your-components)
-   3. [Step 3: Display Cart Items in the Template](#step-3-display-cart-items-in-the-template)
+- Lifecycle Hooks
+   - ngOnChanges
+   - ngOnInit
+   - ngDoCheck
+   - ngAfterContentInit
+   - ngAfterContentChecked
+   - ngAfterViewInit
+   - ngAfterViewChecked
+   - ngOnDestroy
 
-18. [State Management Options in Angular](#state-management-options-in-angular)
+- Services
+   - Create the Service Class
+   - Define the Service Class (book.service.ts)
+   - Using the Book Service in a Component
+   - Inject the Service (`books.component.ts`)
 
-19. [Routing](#routing)
-   1. [Step 1. Generate Routes](#step-1-generate-routes)
-   2. [Step 2: Create Link](#step-2-create-link)
-   3. [Step 3: Display Single Page Component](#step-3-display-single-page-component)
-   4. [Step 4: Create Single Page Template](#step-4-create-single-page-template)
-   5. [Step 5: Update App Module](#step-5-update-app-module)
+- Dependency Injection
+   - How Dependency Injection Works in Angular
+      - Service Registration
+      - Requesting Dependencies
+      - Dependency Resolution
+   - Example: Using Dependency Injection in Angular
 
-20. [Route Guards](#route-guards)
-   1. [Step 1: Create an Auth Guard](#step-1-create-an-auth-guard)
-   2. [Step 2: Implement the Route Guard](#step-2-implement-the-route-guard)
-   3. [Step 3: Update the Route Configuration](#step-3-update-the-route-configuration)
+- Custom Modules
+   - Generate a Custom Module
+   - Use the Custom Module in Your Application
+
+- State Management With Services
+   - Step 1: Create a Shopping Cart Service
+   - Step 2: Use the Shopping Cart Service in Your Components
+   - Step 3: Display Cart Items in the Template
+
+- State Management Options in Angular
+
+- Routing
+   - Step 1. Generate Routes
+   - Step 2: Create Link
+   - Step 3: Display Single Page Component
+   - Step 4: Create Single Page Template
+   - Step 5: Update App Module
+
+- Route Guards
+   - Step 1: Create an Auth Guard
+   - Step 2: Implement the Route Guard
+   - Step 3: Update the Route Configuration
 
 ## Using Angular CLI
 
