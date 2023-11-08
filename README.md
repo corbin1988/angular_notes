@@ -2,10 +2,6 @@
 
 ## Table of Contents
 
-# Table of Contents
-
-# Table of Contents
-
 * [Using Angular CLI](#using-angular-cli)
    * [Creating A Project](#creating-a-project)
    * [Starting A Project](#starting-a-project)
