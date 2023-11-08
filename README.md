@@ -960,3 +960,115 @@ Explanation:
 - By specifying `providers`, you make services available for injection within the module.
 - You can optionally export components from the module, making them available for use in other modules that import `BooksModule`.
 - In your application's main module (e.g., `AppModule`), you import the custom module (`BooksModule`) to include the "books" feature in your application.
+
+## State Management With Services
+
+State management in an Angular application is the process of handling and controlling the data and user interface (UI) state of your application. This includes managing the data, properties, and behaviors of your application in a consistent and organized way. 
+
+In this example we're going to be handling state between multiple components. In our case a cart and books. 
+
+### Step 1: Create a Shopping Cart Service:
+
+```TS
+// cart.service.ts
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CartService {
+  private cart: any[] = [];
+
+  addToCart(book: any) {
+    this.cart.push(book);
+  }
+
+  removeFromCart(bookId: number) {
+    this.cart = this.cart.filter((book) => book.id !== bookId);
+  }
+
+  getCart() {
+    return this.cart;
+  }
+}
+```
+
+In this service:
+
+- We use the `@Injectable` decorator to make the service available at the root level.
+- We maintain a private `cart` array to store the selected books.
+- The `addToCart` method adds a book to the cart.
+The `removeFromCart` method removes a book from the cart based on its ID.
+- The `getCart` method returns the current contents of the cart.
+
+### Step 2: Use the Shopping Cart Service in Your Components:
+
+Now, you can use the `CartService` in your components to manage the shopping cart state.
+
+```TS
+// book.component.ts
+import { Component, Input } from '@angular/core';
+import { CartService } from './cart.service';
+
+@Component({
+  selector: 'app-book',
+  templateUrl: './book.component.html',
+})
+export class BookComponent {
+  @Input() book: any;
+
+  constructor(private cartService: CartService) {}
+
+  onAddToCart() {
+    this.cartService.addToCart(this.book);
+  }
+}
+
+// cart.component.ts
+import { Component } from '@angular/core';
+import { CartService } from './cart.service';
+
+@Component({
+  selector: 'app-cart',
+  templateUrl: './cart.component.html',
+})
+export class CartComponent {
+  cart: any[] = [];
+
+  constructor(private cartService: CartService) {
+    this.cart = this.cartService.getCart();
+  }
+
+  onRemoveFromCart(bookId: number) {
+    this.cartService.removeFromCart(bookId);
+  }
+}
+```
+
+In the `BookComponent`:
+
+- We inject the `CartService` and use the `onAddToCart` method to add a book to the cart.
+- In the CartComponent:
+- We inject the `CartService` and use the `getCart` method to retrieve the cart contents.
+- The `onRemoveFromCart` method is used to remove a book from the cart.
+
+### Step 3: Display Cart Items in the Template:
+
+```html
+<!-- cart.component.html -->
+<div>
+  <h2>Shopping Cart</h2>
+  <ul>
+    <li *ngFor="let item of cart">
+      {{ item.title }} <button (click)="onRemoveFromCart(item.id)">Remove</button>
+    </li>
+  </ul>
+</div>
+```
+
+Explanation:
+
+- The `CartService` is used to manage the shopping cart state with methods for adding, removing, and retrieving items from the cart.
+- In the `BookComponent`, we use the service to add books to the cart.
+- In the `CartComponent`, we use the service to retrieve the cart contents and remove items from the cart.
+- The state is shared across components using the `CartService`, and changes made in one component are reflected in the other components that use the same service.
